@@ -19,6 +19,13 @@ class HomeView extends StatelessWidget {
               "Points Counter",
               style: TextStyle(color: Colors.white),
             ),
+            actions: [
+              IconButton(
+                onPressed: () => BlocProvider.of<CounterCubit>(context).undo(),
+                icon: const Icon(Icons.undo, color: Colors.white),
+                tooltip: 'Undo',
+              ),
+            ],
           ),
           body: Column(
             spacing: 70,
