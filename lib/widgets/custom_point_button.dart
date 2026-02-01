@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomPointButton extends StatelessWidget {
   const CustomPointButton({
     super.key,
-    required this.points,
+    this.points=1,
     required this.onAdd,
   });
 
