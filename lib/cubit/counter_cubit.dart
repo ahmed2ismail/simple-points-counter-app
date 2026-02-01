@@ -6,11 +6,11 @@ class CounterCubit extends Cubit<CounterState> {
   CounterCubit() : super(CounterState(teamAScore: 0, teamBScore: 0));
 
   // قائمة لتخزين الحالات السابقة (History) عشان نقدر نعمل Undo
-  final List<CounterState> _history = [];
+  final List<CounterState> history = [];
 
   void incrementCounter({required String teamName, required int points}) {
     // قبل ما نغير الحالة، نحفظ الحالة الحالية في السجل
-    _history.add(state);
+    history.add(state);
 
     if (teamName == "Team A") {
       // التحسين: نأخذ القيمة القديمة من state.teamAScore ونضيف عليها النقاط
@@ -35,16 +35,16 @@ class CounterCubit extends Cubit<CounterState> {
 
   void resetCounters() {
     // برضه قبل التصفير نحفظ الحالة عشان لو داس تصفير بالغلط يقدر يرجع
-    _history.add(state);
+    history.add(state);
     // التحسين: عند التصفير، نرسل حالة جديدة تحتوي على أصفار
     emit(CounterState(teamAScore: 0, teamBScore: 0));
   }
 
   void undo() {
     // نتأكد ان فيه حالات سابقة محفوظة عشان منعملش error
-    if (_history.isNotEmpty) {
+    if (history.isNotEmpty) {
       // نجيب اخر حالة تم حفظها ونحذفها من الليست
-      final previousState = _history.removeLast();
+      final previousState = history.removeLast();
       // نرجع للحالة دي
       emit(previousState);
     }

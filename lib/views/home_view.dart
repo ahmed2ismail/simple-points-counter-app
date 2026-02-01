@@ -22,7 +22,12 @@ class HomeView extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: () => BlocProvider.of<CounterCubit>(context).undo(),
-                icon: const Icon(Icons.undo, color: Colors.white),
+                icon: Icon(
+                  Icons.undo,
+                  color: BlocProvider.of<CounterCubit>(context).history.isEmpty
+                      ? Colors.grey.withValues(alpha: 0.1)
+                      : Colors.white,
+                ),
                 tooltip: 'Undo',
               ),
             ],
