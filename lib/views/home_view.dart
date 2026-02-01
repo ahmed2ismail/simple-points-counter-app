@@ -9,12 +9,9 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CounterCubit, CounterState>(
-      listener: (context, state) {
-        // هنا ممكن نعمل حاجات معينة بناء علي الحالة اللي اتغيرت من غير منغير ال UI لان احنا مش عايزين نغيره اصلا
-        if (state is CounterAIncrementState) {
-        } else {}
-      },
+    // التحسين: استخدمنا BlocBuilder بدلاً من BlocConsumer لأننا نحتاج فقط لإعادة بناء الواجهة (Rebuild)
+    // ولا نحتاج لـ listener في الوقت الحالي (الـ listener يستخدم للـ Side Effects مثل الـ SnackBar)
+    return BlocBuilder<CounterCubit, CounterState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -31,7 +28,8 @@ class HomeView extends StatelessWidget {
                 children: [
                   TeamScoreColumn(
                     teamName: "Team A",
-                    counter: BlocProvider.of<CounterCubit>(context).counterA,
+                    // التحسين: نأخذ القيمة من الـ state مباشرة وليس من متغيرات الـ Cubit
+                    counter: state.teamAScore,
                     onAddPoints: (points) {
                       BlocProvider.of<CounterCubit>(
                         context,
@@ -49,7 +47,8 @@ class HomeView extends StatelessWidget {
                   ),
                   TeamScoreColumn(
                     teamName: "Team B",
-                    counter: BlocProvider.of<CounterCubit>(context).counterB,
+                    // التحسين: نأخذ القيمة من الـ state مباشرة
+                    counter: state.teamBScore,
                     onAddPoints: (points) {
                       BlocProvider.of<CounterCubit>(
                         context,
