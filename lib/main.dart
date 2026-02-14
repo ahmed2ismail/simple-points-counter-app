@@ -19,7 +19,7 @@ class PointsCounter extends StatelessWidget {
         theme: ThemeData(
           appBarTheme: const AppBarTheme(backgroundColor: Colors.orange),
         ),
-        home: HomeView(),
+        home: const HomeView(),
       ),
     );
   }
